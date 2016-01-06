@@ -1,5 +1,8 @@
 import base64
-from StringIO import StringIO
+try:
+    from StringIO import StringIO
+except ImportError:
+    from io import StringIO
 
 from django import template
 
@@ -14,7 +17,7 @@ def base64capture(url, selector):
     simage = StringIO()
     casperjs_capture(simage, url, selector=selector)
     # Convert to base64
-    encoded = base64.encodestring(simage.getvalue())
+    encoded = base64.encodebytes(simage.getvalue())
     return "image/png;base64," + encoded
 
 

@@ -5,6 +5,7 @@ import argparse
 from django import VERSION
 from django.conf import settings
 
+
 class QuickDjangoTest(object):
     """
     A quick way to run the Django test suite without a fully-configured project.
@@ -33,8 +34,8 @@ class QuickDjangoTest(object):
         Fire up the Django test suite
         """
         settings.configure(
-            DEBUG = True,
-            DATABASES = {
+            DEBUG=True,
+            DATABASES={
                 'default': {
                     'ENGINE': 'django.db.backends.sqlite3',
                     'NAME': os.path.join(self.DIRNAME, 'database.db'),
@@ -44,13 +45,13 @@ class QuickDjangoTest(object):
                     'PORT': '',
                 }
             },
-            LOGGING = {
+            LOGGING={
                 'version': 1,
                 'formatters': {'simple': {'format': '%(levelname)s %(asctime)s %(name)s %(message)s'}},
                 'handlers': {'console': {'class': 'logging.StreamHandler', 'formatter': 'simple'}},
                 'loggers': {'screamshot': {'handlers': ['console'], 'level': 'DEBUG'}}
             },
-            INSTALLED_APPS = self.INSTALLED_APPS + self.apps
+            INSTALLED_APPS=self.INSTALLED_APPS + self.apps
         )
         if VERSION >= (1, 7):
             import django
@@ -65,7 +66,7 @@ class QuickDjangoTest(object):
             test_runner = DiscoverRunner(verbosity=1)
 
         failures = test_runner.run_tests(self.apps)
-        if failures: # pragma: no cover
+        if failures:  # pragma: no cover
             sys.exit(failures)
 
 if __name__ == '__main__':
